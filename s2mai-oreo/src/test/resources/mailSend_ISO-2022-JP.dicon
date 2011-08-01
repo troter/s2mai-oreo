@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.3//EN"
+  "http://www.seasar.org/dtd/components23.dtd">
+<components>
+  <include path="s2mai-core.dicon"/>
+
+  <component name="stringContextHelper" class="jp.troter.seasar.mai.template.impl.StringContextHelperImpl"/>
+  <component name="stringProcessor" class="jp.troter.seasar.mai.template.impl.StringProcessor"/>
+
+  <component name="maiInterceptor" class="jp.troter.seasar.mai.interceptor.S2MaiOreoInterceptor">
+    <property name="contextHelper">stringContextHelper</property>
+    <property name="templateProcessor">stringProcessor</property>
+  </component>
+
+  <component class="org.seasar.mai.mail.impl.SendMailImpl">
+    <property name="host">host</property>
+    <property name="port">port</property>
+    <property name="username">username</property>
+    <property name="password">password</property>
+    <property name="returnPath">returnPath</property>
+    <property name="messageId">messageId</property>
+    <property name="connectionTimeout">connectionTimeout</property>
+    <property name="readTimeout">readTimeout</property>
+    <property name="charset">"ISO-2022-JP"</property>
+  </component>
+
+  <component class="jp.troter.seasar.mai.MailSend">
+    <aspect>maiInterceptor</aspect>
+  </component>
+
+</components>
