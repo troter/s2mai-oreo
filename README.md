@@ -20,6 +20,6 @@ pom.xmlに追記する設定
       <dependency>
         <groupId>jp.troter</groupId>
         <artifactId>s2mai-oreo</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.1.0</version>
       </dependency>
     </dependencies>
