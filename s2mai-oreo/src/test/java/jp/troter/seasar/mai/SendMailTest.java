@@ -30,11 +30,11 @@ public class SendMailTest {
 
     @Test
     public void smoke() {
-        test(new MailSendFactory(), MailCharset.UTF_8);
-        test(new MailSendFactory(), MailCharset.ISO_2022_JP);
+        send(new MailSendFactory(), MailCharset.UTF_8);
+        send(new MailSendFactory(), MailCharset.ISO_2022_JP);
     }
 
-    public void test(MailSendFactory factory, MailCharset charset) {
+    public void send(MailSendFactory factory, MailCharset charset) {
         MailSend sender = factory.getMailSender(charset);
         sender.sendMail(createMailText(mailAddress, mailAddress, "テキストメールサンプル(" + charset.getCharset() + ")", TextUtil.readUTF8("sample.txt")));
         sender.sendMail(createMailHtml(mailAddress, mailAddress, "HTMLメールサンプル(" + charset.getCharset() + ")", TextUtil.readUTF8("sample.html")));
