@@ -17,6 +17,7 @@ package jp.troter.seasar.mai;
 
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.S2ContainerFactory;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 
 public abstract class GenericSendMailFactory<T> {
 
@@ -26,9 +27,25 @@ public abstract class GenericSendMailFactory<T> {
      * @param charset
      * @return
      */
-    @SuppressWarnings("unchecked")
     public T create(Class<T> clazz, SendMailCharset charset) {
-        S2Container container = S2ContainerFactory.create(charset.getDiconPath(clazz));
+        return create(SingletonS2ContainerFactory.getContainer(), clazz, charset);
+    }
+
+    /**
+     * インターフェースとCharsetから適切なdiconを読み込んでメール送信オブジェクトを返す。
+     * @param parent
+     * @param clazz
+     * @param charset
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public T create(S2Container parent, Class<T> clazz, SendMailCharset charset) {
+        S2Container container = null;
+        if (parent == null) {
+            container = S2ContainerFactory.create(charset.getDiconPath(clazz));
+        } else {
+            container = S2ContainerFactory.include(parent, charset.getDiconPath(clazz));
+        }
         T mailSender = (T) container.getComponent(clazz);
         return mailSender;
     }
