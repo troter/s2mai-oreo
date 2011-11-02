@@ -21,8 +21,10 @@ import javax.transaction.TransactionManager;
 import jp.troter.seasar.mai.xa.LoggingInvocation;
 
 import org.seasar.framework.util.TransactionUtil;
+import org.seasar.mai.mail.MailExceptionHandler;
 import org.seasar.mai.mail.SendMail;
 import org.seasar.mai.mail.Transport;
+import org.seasar.mai.mail.impl.MailExceptionHandlerImpl;
 import org.seasar.mai.util.TransactionManagerUtil;
 import org.seasar.mai.xa.Invocation;
 import org.seasar.mai.xa.MailStack;
@@ -32,10 +34,13 @@ import com.ozacc.mail.Mail;
 
 public class LoggingXaTransportImpl implements Transport {
 
+    private MailExceptionHandler mailExceptionHandler = new MailExceptionHandlerImpl();
+
     private TransactionManager transactionManager;
 
     public void send(Mail mail, SendMail sendMail) {
         Invocation invocation = new LoggingInvocation(sendMail, mail);
+        invocation.setMailExceptionHandler(mailExceptionHandler);
 
         if (TransactionManagerUtil.hasTransaction(transactionManager)) {
             MailStack mailStack = getMailStack();
@@ -61,4 +66,7 @@ public class LoggingXaTransportImpl implements Transport {
         this.transactionManager = transactionManager;
     }
 
+    public void setMailExceptionHandler(MailExceptionHandler mailExceptionHandler) {
+        this.mailExceptionHandler = mailExceptionHandler;
+    }
 }
