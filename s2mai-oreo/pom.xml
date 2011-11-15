@@ -213,6 +213,12 @@
 
   <repositories>
     <repository>
+      <id>spring-ext.sourceforge.jp</id>
+      <name>Spring-ext Maven Repository</name>
+      <url>http://spring-ext.sourceforge.jp/maven/</url>
+      <layout>legacy</layout>
+    </repository>
+    <repository>
       <id>maven.seasar.org</id>
       <name>The Seasar Foundation Maven2 Repository</name>
       <url>http://maven.seasar.org/maven2</url>
